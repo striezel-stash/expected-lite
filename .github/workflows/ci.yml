@@ -54,6 +54,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Workaround for incompatible clang and libstc++ versions, see
+      # <https://github.com/actions/runner-images/issues/8659> for more info.
+      # The basic idea here is to remove g++ 13 and its C++ standard library
+      # and replace that with a compatible version of libstdc++.
+      - name: Workaround for GHA issue 8659
+        run: |
+          dpkg -l
+          sudo apt-get purge -y g++-13 libstdc++-13-dev
+          sudo apt-get install -y libstdc++-12-dev
+
       - name: Install Clang ${{ matrix.version }}
         run: sudo apt-get install -y clang-${{ matrix.version }}
 
