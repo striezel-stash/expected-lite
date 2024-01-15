@@ -61,8 +61,8 @@ jobs:
       - name: Workaround for GHA issue 8659
         run: |
           dpkg -l
-          sudo apt-get purge -y g++-13 libstdc++-13-dev
-          sudo apt-get install -y libstdc++-12-dev
+          sudo apt-get purge -y g++-13 gcc-13 libstdc++-13-dev
+          sudo apt-get install -y --allow-downgrades libstdc++-12-dev libstdc++6=12.* libgcc-s1=12.*
 
       - name: Install Clang ${{ matrix.version }}
         run: sudo apt-get install -y clang-${{ matrix.version }}
